@@ -48,3 +48,6 @@ provider_info = "airflow_provider_ibm_db2:get_provider_info"
 [tool.ruff]
 line-length = 100
 select = ["E","F","I","UP"]
+
+[tool.hatch.version]
+path = "src/airflow_provider_ibm_db2/__init__.py"
