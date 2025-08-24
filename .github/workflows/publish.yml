@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Necesario para hatch-vcs
 
       - uses: actions/setup-python@v5
         with:
@@ -28,10 +28,46 @@ jobs:
           python -m pip install --upgrade pip
           pip install --upgrade build hatchling hatch-vcs
 
+      - name: Debug Git and Version Info
+        run: |
+          echo "Git tags:"
+          git tag -l
+          echo "Current commit:"
+          git rev-parse HEAD
+          echo "Git describe:"
+          git describe --tags --always --dirty
+          echo "GITHUB_REF: $GITHUB_REF"
+
+      - name: Test version detection
+        run: |
+          python -c "
+          import hatchling.metadata.core
+          try:
+              from hatch_vcs import VCSVersionSource
+              print('hatch-vcs available')
+          except ImportError as e:
+              print(f'hatch-vcs not available: {e}')
+          "
+
       - name: Build package
-        run: python -m build
+        run: |
+          echo "Building package..."
+          python -m build --verbose
+
+      - name: Inspect built package
+        run: |
+          echo "Contents of dist/:"
+          ls -la dist/
+          echo "Checking metadata of wheel:"
+          python -m zipfile -l dist/*.whl | head -20
+
+      - name: Verify package metadata
+        run: |
+          pip install twine
+          twine check dist/*
 
       - name: Publish to PyPI (Trusted Publishing)
-        uses: pypa/gh-action-pypi-publish@v1.8.14
+        uses: pypa/gh-action-pypi-publish@v1.10.1
         with:
           verify-metadata: false
+          verbose: true
