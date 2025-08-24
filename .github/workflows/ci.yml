@@ -18,6 +18,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade build twine hatchling
+      - name: Debug pyproject
+        run: |
+          pwd
+          ls -la
+          python - << 'PY'
+          import tomllib, pathlib
+          data = tomllib.loads(pathlib.Path('pyproject.toml').read_bytes())
+          print("project.name:", data.get("project", {}).get("name"))
+          print("optional-deps keys:", list(data.get("project", {}).get("optional-dependencies", {}).keys()))
+          PY
       - name: Install (editable)
         run: |
           pip install -e .[dev]
@@ -37,6 +47,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Upgrade build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade build twine hatchling
       - name: Upgrade build tools
         run: |
           python -m pip install --upgrade pip

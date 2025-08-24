@@ -8,21 +8,9 @@ dynamic = ["version"]
 description = "Apache Airflow provider for IBM Db2 (Hook + Operators, ibm_db_dbi with pyodbc fallback)"
 readme = "README.md"
 requires-python = ">=3.9"
-authors = [
-  { name = "Armando Rodriguez" }
-]
+authors = [{ name = "Armando Rodriguez" }]
 license = { text = "MIT" }
-dependencies = [
-  "apache-airflow>=2.7",
-]
-[project.optional-dependencies]
-dev = [
-  "pytest",
-  "pytest-cov",
-  "ruff",
-  "mypy",
-  "types-PyYAML",
-]
+dependencies = ["apache-airflow>=2.7"]
 
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -39,9 +27,12 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2"
-Repository = "https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2"
-Issues = "https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2/issues"
+Homepage = "https://github.com/armandospxp/airflow-provider-ibm-db2"
+Repository = "https://github.com/armandospxp/airflow-provider-ibm-db2"
+Issues = "https://github.com/armandospxp/airflow-provider-ibm-db2/issues"
+
+[project.optional-dependencies]
+dev = ["pytest","pytest-cov","ruff","mypy","types-PyYAML"]
 
 [project.entry-points."apache_airflow_provider"]
 provider_info = "airflow_provider_ibm_db2:get_provider_info"
