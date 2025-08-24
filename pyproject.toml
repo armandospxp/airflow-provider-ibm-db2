@@ -1,17 +1,16 @@
 [build-system]
-requires = ["hatchling>=1.24.2"]
+requires = ["hatchling>=1.24.2", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "airflow-provider-ibm-db2"
-version = "0.1.0"
+dynamic = ["version"]  # Cambiado de version = "0.1.0"
 description = "Apache Airflow provider for IBM Db2 (Hook + Operators, ibm_db_dbi with pyodbc fallback)"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [{ name = "Armando Rodriguez" }]
 license = { file = "LICENSE" }
 dependencies = ["apache-airflow>=2.7"]
-
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
@@ -36,6 +35,9 @@ dev = ["pytest","pytest-cov","ruff","mypy","types-PyYAML"]
 
 [project.entry-points."apache_airflow_provider"]
 provider_info = "airflow_provider_ibm_db2:get_provider_info"
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/airflow_provider_ibm_db2"]
