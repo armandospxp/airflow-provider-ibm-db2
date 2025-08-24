@@ -2,15 +2,15 @@ name: Publish to PyPI
 
 on:
   release:
-    types: [published]        # se dispara al publicar un Release
+    types: [published]
   push:
     tags:
-      - 'v*'                  # o al pushear un tag tipo v0.1.2
-  workflow_dispatch:           # botón manual "Run workflow"
+      - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: read
-  id-token: write             # requerido para OIDC
+  id-token: write   # necesario para OIDC
 
 jobs:
   build-and-publish:
@@ -30,9 +30,11 @@ jobs:
       - name: Build package
         run: python -m build
 
-      # 👇 Paso de inspección del wheel para verificar METADATA (Name/Version)
+      # 👇 Forzar bash para evitar el error de sintaxis del heredoc
       - name: Inspect built wheel METADATA
+        shell: bash
         run: |
+          set -euo pipefail
           python - << 'PY'
           import zipfile, glob, sys
           wheels = glob.glob("dist/*.whl")
@@ -50,7 +52,6 @@ jobs:
               meta = z.read(meta_name).decode("utf-8", errors="replace")
               print("== METADATA path:", meta_name)
               print(meta)
-              # chequeo básico
               assert "Name: " in meta, "Missing 'Name:' in METADATA"
               assert "Version: " in meta, "Missing 'Version:' in METADATA"
           PY
