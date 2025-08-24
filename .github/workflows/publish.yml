@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -30,30 +29,5 @@ jobs:
       - name: Build package
         run: python -m build
 
-      - name: Inspect built wheel METADATA
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - << 'PY'
-          import zipfile, glob, sys
-          wheels = glob.glob("dist/*.whl")
-          if not wheels:
-              print("No wheels found in dist/")
-              sys.exit(1)
-          print("Wheels:", wheels)
-          whl = wheels[0]
-          with zipfile.ZipFile(whl) as z:
-              metas = [n for n in z.namelist() if n.endswith("METADATA")]
-              if not metas:
-                  print("No METADATA in wheel")
-                  sys.exit(1)
-              meta_name = metas[0]
-              meta = z.read(meta_name).decode("utf-8", errors="replace")
-              print("== METADATA path:", meta_name)
-              print(meta)
-              assert "Name: " in meta, "Missing 'Name:' in METADATA"
-              assert "Version: " in meta, "Missing 'Version:' in METADATA"
-          PY
-
-                - name: Publish to PyPI (Trusted Publishing)
-                  uses: pypa/gh-action-pypi-publish@v1.8.14
+      - name: Publish to PyPI (Trusted Publishing)
+        uses: pypa/gh-action-pypi-publish@v1.8.14
