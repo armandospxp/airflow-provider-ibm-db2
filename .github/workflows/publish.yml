@@ -10,7 +10,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write   # necesario para OIDC
+  id-token: write   
 
 jobs:
   build-and-publish:
@@ -30,7 +30,6 @@ jobs:
       - name: Build package
         run: python -m build
 
-      # 👇 Forzar bash para evitar el error de sintaxis del heredoc
       - name: Inspect built wheel METADATA
         shell: bash
         run: |
