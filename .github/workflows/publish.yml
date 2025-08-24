@@ -2,15 +2,15 @@ name: Publish to PyPI
 
 on:
   release:
-    types: [published]        
+    types: [published]        # se dispara al publicar un Release
   push:
     tags:
-      - 'v*'                  
-  workflow_dispatch:           
+      - 'v*'                  # o al pushear un tag tipo v0.1.2
+  workflow_dispatch:           # botón manual "Run workflow"
 
 permissions:
   contents: read
-  id-token: write           
+  id-token: write             # requerido para OIDC
 
 jobs:
   build-and-publish:
@@ -30,5 +30,30 @@ jobs:
       - name: Build package
         run: python -m build
 
-      - name: Publish to PyPI (Trusted Publishing)
-        uses: pypa/gh-action-pypi-publish@v1.8.14
+      # 👇 Paso de inspección del wheel para verificar METADATA (Name/Version)
+      - name: Inspect built wheel METADATA
+        run: |
+          python - << 'PY'
+          import zipfile, glob, sys
+          wheels = glob.glob("dist/*.whl")
+          if not wheels:
+              print("No wheels found in dist/")
+              sys.exit(1)
+          print("Wheels:", wheels)
+          whl = wheels[0]
+          with zipfile.ZipFile(whl) as z:
+              metas = [n for n in z.namelist() if n.endswith("METADATA")]
+              if not metas:
+                  print("No METADATA in wheel")
+                  sys.exit(1)
+              meta_name = metas[0]
+              meta = z.read(meta_name).decode("utf-8", errors="replace")
+              print("== METADATA path:", meta_name)
+              print(meta)
+              # chequeo básico
+              assert "Name: " in meta, "Missing 'Name:' in METADATA"
+              assert "Version: " in meta, "Missing 'Version:' in METADATA"
+          PY
+
+                - name: Publish to PyPI (Trusted Publishing)
+                  uses: pypa/gh-action-pypi-publish@v1.8.14

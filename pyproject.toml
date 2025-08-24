@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "airflow-provider-ibm-db2"
-dynamic = ["version"]
+version = "0.1.0"
 description = "Apache Airflow provider for IBM Db2 (Hook + Operators, ibm_db_dbi with pyodbc fallback)"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -36,9 +36,6 @@ dev = ["pytest","pytest-cov","ruff","mypy","types-PyYAML"]
 
 [project.entry-points."apache_airflow_provider"]
 provider_info = "airflow_provider_ibm_db2:get_provider_info"
-
-[tool.hatch.version]
-path = "src/airflow_provider_ibm_db2/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/airflow_provider_ibm_db2"]
