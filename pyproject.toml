@@ -3,7 +3,26 @@ requires = ["hatchling>=1.24.2"]
 build-backend = "hatchling.build"
 
 [project]
+name = "airflow-provider-ibm-db2"
 dynamic = ["version"]
+description = "Apache Airflow provider for IBM Db2 (Hook + Operators, ibm_db_dbi with pyodbc fallback)"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "Armando Rodriguez" }
+]
+license = { text = "MIT" }
+dependencies = [
+  "apache-airflow>=2.7",
+]
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "ruff",
+  "mypy",
+  "types-PyYAML",
+]
 
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -20,38 +39,19 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/armandospxp/airflow-provider-ibm-db2"
-Repository = "https://github.com/armandospxp/airflow-provider-ibm-db2"
-Issues = "https://github.com/armandospxp/airflow-provider-ibm-db2/issues"
-name = "airflow-provider-ibm-db2"
-version = "0.1.0"
-description = "Apache Airflow provider for IBM Db2 (Hook + Operators)"
-readme = "README.md"
-requires-python = ">=3.9"
-authors = [
-  { name="Armando Rodriguez", email="armandospxp@gmail.com" },
-]
-license = { text = "MIT" }
-dependencies = [
-  "apache-airflow>=2.7",
-]
-optional-dependencies.dev = [
-  "pytest",
-  "pytest-cov",
-  "ruff",
-  "mypy",
-  "types-PyYAML",
-]
+Homepage = "https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2"
+Repository = "https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2"
+Issues = "https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2/issues"
 
 [project.entry-points."apache_airflow_provider"]
 provider_info = "airflow_provider_ibm_db2:get_provider_info"
-
-[tool.ruff]
-line-length = 100
-select = ["E","F","I","UP"]
 
 [tool.hatch.version]
 path = "src/airflow_provider_ibm_db2/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/airflow_provider_ibm_db2"]
+
+[tool.ruff]
+line-length = 100
+select = ["E","F","I","UP"]
