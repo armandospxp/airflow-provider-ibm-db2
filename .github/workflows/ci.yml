@@ -7,20 +7,46 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  lint-and-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install
+      - name: Upgrade build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade build twine hatchling
+      - name: Install (editable)
         run: |
           pip install -e .[dev]
       - name: Lint
         run: |
           python -m pip install ruff
           ruff check src
-      - name: Test
+      - name: Tests
         run: |
           pytest -q
+
+  editable-install-check:
+    name: Editable install check (PEP 660)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Upgrade build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade build twine hatchling
+      - name: Editable install
+        run: |
+          pip install -e .[dev]
+      - name: Smoke import
+        run: |
+          python - << 'PY'
+          import airflow_provider_ibm_db2
+          print("Version:", getattr(airflow_provider_ibm_db2, "__version__", "n/a"))
+          PY
