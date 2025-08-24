@@ -24,9 +24,14 @@ jobs:
           ls -la
           python - << 'PY'
           import tomllib, pathlib
-          data = tomllib.loads(pathlib.Path('pyproject.toml').read_bytes())
-          print("project.name:", data.get("project", {}).get("name"))
-          print("optional-deps keys:", list(data.get("project", {}).get("optional-dependencies", {}).keys()))
+          p = pathlib.Path('pyproject.toml')
+          print("pyproject exists?", p.exists())
+          if p.exists():
+              data = tomllib.loads(p.read_bytes())    
+              print("project.name:", data.get("project", {}).get("name"))
+              print("dynamic:", data.get("project", {}).get("dynamic"))
+              hv = data.get("tool", {}).get("hatch", {}).get("version", {})
+              print("[tool.hatch.version].path:", hv.get("path"))
           PY
       - name: Install (editable)
         run: |
