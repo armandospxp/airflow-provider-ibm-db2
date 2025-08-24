@@ -1,8 +1,9 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.24.2"]
 build-backend = "hatchling.build"
 
 [project]
+dynamic = ["version"]
 
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -51,3 +52,6 @@ select = ["E","F","I","UP"]
 
 [tool.hatch.version]
 path = "src/airflow_provider_ibm_db2/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/airflow_provider_ibm_db2"]
