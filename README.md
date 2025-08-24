@@ -1,31 +1,42 @@
-[![PyPI version](https://badge.fury.io/py/airflow-provider-ibm-db2.svg)](https://pypi.org/project/airflow-provider-ibm-db2/)
-
 # airflow-provider-ibm-db2
 
-Provider de **Apache Airflow** para conectarse a **IBM Db2** con `ibm_db_dbi` (nativo) y _fallback_ a `pyodbc`.
-Incluye Hook y Operators básicos, ejemplo de DAG, y tests.
+[![PyPI version](https://badge.fury.io/py/airflow-provider-ibm-db2.svg)](https://pypi.org/project/airflow-provider-ibm-db2/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/airflow-provider-ibm-db2.svg)](https://pypi.org/project/airflow-provider-ibm-db2/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/airflow-provider-ibm-db2/actions)
 
-> Estado: **MVP inicial** — pensado para evolucionar con tu feedback y PRs.
+**Apache Airflow provider** to connect to **IBM Db2** using `ibm_db_dbi` (native) with a _fallback_ to `pyodbc`.  
+Includes basic Hook and Operators, an example DAG, and unit tests.
 
-## Características
-- `Db2Hook` con detección de driver: `ibm_db_dbi` → `pyodbc` (fallback).
-- `Db2SqlOperator` para ejecutar SQL parametrizado (basado en `SQLExecuteQueryOperator`).
-- `Db2StoredProcedureOperator` para invocar `CALL schema.proc(?,?)`.
-- `Db2CheckOperator` para chequeos de data quality (conteos/valores).
-- `bulk_load()` mediante `SYSPROC.ADMIN_CMD('LOAD/IMPORT ...')` (si el usuario tiene permisos).
-- Ejemplo de DAG y tests con `pytest`.
+> Status: **Initial MVP** — designed to evolve with your feedback and contributions.
 
-## Instalación (editable)
+---
+
+## ✨ Features
+- `Db2Hook` with driver auto-detection: `ibm_db_dbi` → `pyodbc` (fallback).
+- `Db2SqlOperator` to execute parameterized SQL (based on `SQLExecuteQueryOperator`).
+- `Db2StoredProcedureOperator` to invoke `CALL schema.proc(?,?)`.
+- `Db2CheckOperator` for data quality checks (counts/values).
+- `bulk_load()` via `SYSPROC.ADMIN_CMD('LOAD/IMPORT ...')` (if the user has privileges).
+- Example DAG and tests with `pytest`.
+
+---
+
+## ⚡ Installation (editable)
 ```bash
 pip install -e .[dev]
 ```
 
-## Configurar conexión en Airflow
-Crea una **Connection** con ID `db2_default`:
-- **Conn Type**: `Db2` (cadena libre) o `Generic`
-- **Host**: `hostname`  | **Port**: `50000`
-- **Schema**: `DBNAME`  | **Login**: `user` | **Password**: `******`
-- **Extra (JSON)** opcional:
+---
+
+## 🔧 Airflow Connection Setup
+Create a **Connection** with ID `db2_default`:
+
+- **Conn Type**: `Db2` (free text) or `Generic`  
+- **Host**: `hostname`  | **Port**: `50000`  
+- **Schema**: `DBNAME`  | **Login**: `user` | **Password**: `******`  
+
+- **Optional Extra (JSON)**:
 ```json
 {
   "ssl": true,
@@ -34,13 +45,20 @@ Crea una **Connection** con ID `db2_default`:
 }
 ```
 
-## Uso rápido
-Mira `src/airflow_provider_ibm_db2/example_dags/example_db2_dag.py`
+---
 
-## Roadmap corto
-- [ ] Transfer operators (Db2→Parquet, Db2→Postgres)
-- [ ] Sensible defaults de aislamiento y reintentos
-- [ ] Matriz de compatibilidad (DB2 LUW 11.1/11.5, Python 3.9–3.12, Airflow ≥2.7)
+## 🚀 Quick Start
+Check out the example DAG:  
+`src/airflow_provider_ibm_db2/example_dags/example_db2_dag.py`
 
-## Licencia
+---
+
+## 🗺️ Short-term Roadmap
+- [ ] Transfer operators (Db2 → Parquet, Db2 → Postgres)  
+- [ ] Sensible defaults for isolation level and retries  
+- [ ] Compatibility matrix (DB2 LUW 11.1/11.5, Python 3.9–3.12, Airflow ≥2.7)  
+
+---
+
+## 📜 License
 MIT
