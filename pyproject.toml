@@ -7,17 +7,19 @@ name = "airflow-provider-ibm-db2"
 version = "0.1.0"  # Cambia manualmente antes de cada release
 description = "Apache Airflow provider for IBM Db2 (Hook + Operators, ibm_db_dbi with pyodbc fallback)"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.7"
 authors = [{ name = "Armando Rodriguez" }]
 license = { file = "LICENSE" }
-dependencies = ["apache-airflow>=2.7"]
+dependencies = [
+  # Airflow 2.5.x es la última rama compatible con Python 3.7
+  "apache-airflow>=2.4,<2.6",
+]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Topic :: Database",
