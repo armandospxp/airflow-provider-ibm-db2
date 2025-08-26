@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "airflow-provider-ibm-db2"
-version = "0.1.0"  # Cambia manualmente antes de cada release
+version = "0.1.2"  # Cambia manualmente antes de cada release
 description = "Apache Airflow provider for IBM Db2 (Hook + Operators, ibm_db_dbi with pyodbc fallback)"
 readme = "README.md"
 requires-python = ">=3.7"

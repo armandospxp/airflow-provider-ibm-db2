@@ -23,6 +23,15 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.1.2] — 2025-08-26
+### Fixed
+- Add compatibility with python v3.7 
+
+### Changed
+- Updated project metadata in `pyproject.toml`
+
+---
+
 ## [0.1.0] — 2025-08-23
 ### Added
 - Initial MVP release on PyPI
